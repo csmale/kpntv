@@ -1,0 +1,14 @@
+iptables -t nat -F POSTROUTING
+
+iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -o eth0.4 -j MASQUERADE
+iptables -t nat -A POSTROUTING -o eth0.44 -j MASQUERADE
+
+iptables -A INPUT -s 224.0.0.0/4 -j ACCEPT
+iptables -A INPUT -d 224.0.0.0/4 -j ACCEPT
+iptables -A INPUT -s 240.0.0.0/5 -j ACCEPT
+iptables -A INPUT -m pkttype --pkt-type multicast -j ACCEPT
+iptables -A INPUT -m pkttype --pkt-type broadcast -j ACCEPT
+
+iptables-save > /etc/iptables/rules.v4
+

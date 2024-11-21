@@ -1,0 +1,10 @@
+auto eth0.4
+iface eth0.4 inet dhcp
+  vlan-raw-device eth0
+  
+auto eth0.44
+iface eth0.44 inet static
+	vlan-raw-device eth0
+	address 192.168.2.1/24
+
+

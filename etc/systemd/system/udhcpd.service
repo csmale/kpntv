@@ -1,0 +1,13 @@
+[Unit]
+Description=DHCP Service
+# wait for network to come up before we run
+After=network.target
+
+[Service]
+# -f means foreground--not sure why, but it works now
+ExecStart=/usr/sbin/udhcpd -f /etc/udhcpd.conf
+#ExecStartPre=/usr/bin/udhcpd-ip-up.sh
+
+[Install]
+WantedBy=multi-user.target
+
