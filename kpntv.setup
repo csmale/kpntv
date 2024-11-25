@@ -1,12 +1,7 @@
 apt update
 apt upgrade -y
-apt install vlan
 modprobe 8021q
-apt install udhcpd
-apt install tcpdump
-apt install iptables
-apt install iptables-persistent
-apt install igmpproxy
+apt install vlan udhcpd tcpdump iptables iptables-persistent igmpproxy -y
 
 install -C --backup=t -o root -g root -m 644 etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf
 install -C --backup=t -o root -g root -m 644 etc/iptables/rules.v4 /etc/iptables/rules.v4
@@ -16,7 +11,7 @@ install -C --backup=t -o root -g root -m 644 etc/udhcpd.conf /etc/udhcpd.conf
 install -C --backup=t -o root -g root -m 644 etc/systemd/system/udhcpd.service /etc/systemd/system/udhcpd.service
 install -C --backup=t -o root -g root -m 644 etc/network/interfaces.d/vlans /etc/network/interfaces.d/vlans
 
-cat 1 > /proc/sys/net/ipv4/ip_forward
+echo 1 > /proc/sys/net/ipv4/ip_forward
 cat /etc/sysctl.conf | sed -r "s/^#?net.ipv4.ip_forward.*/net.ipv4.ip_forward = 1/" > /etc/sysctl.conf
 
 vconfig add eth0 4
@@ -24,7 +19,7 @@ vconfig add eth0 44
 ifconfig eth0.44 up
 ifconfig eth0.4 up
 ip addr add 192.168.2.1 dev eth0.44
-dhclient
+dhclient -nw
 killall igmpproxy && igmpproxy /etc/igmpproxy.conf
 
 iptables-restore /etc/iptables/rules.v4
