@@ -1,7 +1,7 @@
 apt update
 apt upgrade -y
 modprobe 8021q
-apt install vlan udhcpd tcpdump iptables iptables-persistent igmpproxy -y
+apt install ifupdown vlan udhcpd tcpdump iptables iptables-persistent igmpproxy -y
 
 install -C --backup=t -o root -g root -m 644 etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf
 install -C --backup=t -o root -g root -m 644 etc/iptables/rules.v4 /etc/iptables/rules.v4
